@@ -48,7 +48,8 @@ def test_add_user(client):
 def test_get_all_users(client):
     setUp(client)
 
-    response = client.get('/api/users', headers={"Content-Type":"application/json"})
+    token = get_token(client, USER_DATA['username'], USER_DATA['password'])
+    response = client.get('/api/users', headers={"Token": f"{token}", "Content-Type": "application/json"})
     assert response.status_code == 200
     assert b'payload' in response.data
 
